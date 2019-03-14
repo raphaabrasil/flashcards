@@ -23,9 +23,9 @@ export default class Answer extends React.Component {
     return (
       <CardView>
         <CardQuestion>Yeah, it's working!</CardQuestion>
-        <Button title='SIM' color='green' onPress={() => console.log('wow')} />
+        <Button title='Just like I tought!' color='green' onPress={() => console.log('wow')} />
         <View style={{ marginBottom: 10 }} />
-        <Button title='NÃO' color='red' onPress={() => alert('wow')} />
+        <Button title='It was not what i was thinking.' color='red' onPress={() => alert('wow')} />
       </CardView>
     );
   }

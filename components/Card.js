@@ -1,6 +1,8 @@
 import React from 'react';
-import { Button, Text, View } from 'react-native';
+import { Button, Text, View, TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native'
+import CardFlip from 'react-native-card-flip';
+import Answer from './Answer'
 
 const CardView = styled.View`
   color: red;
@@ -29,10 +31,15 @@ const CardLink = styled.Text`
 export default class Card extends React.Component {
   render() {
     return (
-      <CardView>
-        <CardQuestion>Is this working?</CardQuestion>
-        <CardLink>Show me the answer!</CardLink>
-      </CardView>
+      <CardFlip ref={ ( card ) => this.card = card } style={{ flex: 1 }}>
+        <CardView>
+          <CardQuestion>Is this working?</CardQuestion>
+          <TouchableOpacity onPress={ () => this.card.flip() } >
+            <CardLink>Check the answer!</CardLink>
+          </TouchableOpacity>
+        </CardView>
+        <Answer />
+      </CardFlip>
     );
   }
 }

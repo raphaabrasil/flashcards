@@ -7,7 +7,6 @@ export default class DeckPage extends React.Component {
     return (
       <View style={{ flex: 1 }}>
         <Card />
-        <Card />
       </View>
     );
   }
