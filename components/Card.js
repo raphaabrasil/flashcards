@@ -14,25 +14,18 @@ const CardQuestion = styled.Text`
   color: #111;
   font-size: 18px;
   margin-bottom: 15px;
+  text-align: center;
 `
 
 export default class Card extends React.Component {
   render() {
     return (
-      <View style={{ flex: 1 }}>
-        <CardView>
-          <CardQuestion style={{ textAlign: 'center' }}>Is this working?</CardQuestion>
-          <Button title='SIM' color='green' onPress={() => console.log('wow')} />
-          <View style={{ marginBottom: 10 }} />
-          <Button title='NÃO' color='red' onPress={() => alert('wow')} />
-        </CardView>
-        <CardView>
-          <CardQuestion style={{ textAlign: 'center' }}>Is this working?</CardQuestion>
-          <Button title='SIM' color='green' onPress={() => console.log('wow')} />
-          <View style={{ marginBottom: 10 }} />
-          <Button title='NÃO' color='red' onPress={() => alert('wow')} />
-        </CardView>
-      </View>
+      <CardView>
+        <CardQuestion>Is this working?</CardQuestion>
+        <Button title='SIM' color='green' onPress={() => console.log('wow')} />
+        <View style={{ marginBottom: 10 }} />
+        <Button title='NÃO' color='red' onPress={() => alert('wow')} />
+      </CardView>
     );
   }
 }
