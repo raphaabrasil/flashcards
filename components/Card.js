@@ -9,12 +9,21 @@ const CardView = styled.View`
   margin: 0 15px 20px;
   border-radius: 7;
   box-shadow: 10px 10px 10px rgba(0,0,0,1);
+  text-align: center;
+  flex: 1;
+  justify-content: center;
 `
 const CardQuestion = styled.Text`
   color: #111;
-  font-size: 18px;
+  font-size: 28px;
   margin-bottom: 15px;
   text-align: center;
+`
+
+const CardLink = styled.Text`
+  text-align: center;
+  color: blue;
+  margin-top: 10px;
 `
 
 export default class Card extends React.Component {
@@ -22,9 +31,7 @@ export default class Card extends React.Component {
     return (
       <CardView>
         <CardQuestion>Is this working?</CardQuestion>
-        <Button title='SIM' color='green' onPress={() => console.log('wow')} />
-        <View style={{ marginBottom: 10 }} />
-        <Button title='NÃO' color='red' onPress={() => alert('wow')} />
+        <CardLink>Show me the answer!</CardLink>
       </CardView>
     );
   }
