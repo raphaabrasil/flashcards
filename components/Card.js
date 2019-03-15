@@ -1,45 +1,55 @@
 import React from 'react';
-import { Button, Text, View, TouchableOpacity } from 'react-native';
+import { Button, Text, View, TouchableOpacity, Dimensions } from 'react-native';
 import styled from 'styled-components/native'
 import CardFlip from 'react-native-card-flip';
-import Answer from './Answer'
+
 
 const CardView = styled.View`
-  color: red;
-  background-color: #eeeeee;
   padding: 20px;
-  margin: 0 15px 20px;
-  border-radius: 7;
-  box-shadow: 10px 10px 10px rgba(0,0,0,1);
-  text-align: center;
   flex: 1;
   justify-content: center;
 `
 const CardQuestion = styled.Text`
-  color: #111;
-  font-size: 28px;
+  color: #fbfef9;
+  font-size: 38px;
   margin-bottom: 15px;
   text-align: center;
 `
 
 const CardLink = styled.Text`
   text-align: center;
-  color: blue;
+  color: #0E79B2;
   margin-top: 10px;
 `
 
+const { height } = Dimensions.get('window')
+
 export default class Card extends React.Component {
+  handleVote = ( card, goToNext ) => {
+    card.flip()
+    goToNext( height )
+  }
+  fliped = idx => console.log(idx)
   render() {
+    const { item, goToNext } = this.props
+    console.log(this.props)
+
     return (
-      <CardFlip ref={ ( card ) => this.card = card } style={{ flex: 1 }}>
-        <CardView>
-          <CardQuestion>Is this working?</CardQuestion>
-          <TouchableOpacity onPress={ () => this.card.flip() } >
+      <CardFlip ref={ ( card ) => this['card' + item.id] = card } style={{ height: height }} onFlipEnd={ this.fliped }>
+        <CardView style={{ backgroundColor: '#F39237' }}>
+          <CardQuestion>{ item.question }</CardQuestion>
+          <TouchableOpacity onPress={ () => this[`card${item.id}`].flip() } >
             <CardLink>Check the answer!</CardLink>
           </TouchableOpacity>
         </CardView>
-        <Answer />
+        <CardView style={{ backgroundColor: '#0E79B2' }}>
+          <CardQuestion>{ item.answer }</CardQuestion>
+          <Button title='Just like I tought!' color='green' onPress={ () => this.handleVote( this[`card${item.id}`], goToNext )} />
+          <View style={{ marginBottom: 10 }} />
+          <Button title='It was not what i was thinking.' color='red' onPress={ () => this.handleVote( this[`card${item.id}`], goToNext ) }/>
+        </CardView>
       </CardFlip>
     );
   }
 }
+

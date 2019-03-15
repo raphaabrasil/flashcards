@@ -1,7 +1,6 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import DeckPage from './views/DeckPage'
-import Answer from './components/Answer'
 
 export default class App extends React.Component {
   render() {
