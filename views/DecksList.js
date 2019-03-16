@@ -14,6 +14,7 @@ export default class DecksList extends React.Component {
     loading: true,
     decks: []
   }
+
   async componentDidMount() {
     const decks = await getDecks()
     this.setState( state => ({
@@ -24,13 +25,14 @@ export default class DecksList extends React.Component {
   }
 
   render () {
-    console.log(JSON.stringify(this.state))
     const { loading, decks } = this.state
+
     return (
       <HomeView>
         { loading && <Text>Loading</Text>  }
-        {  decks && Object.keys(decks).map( deck => (
+        {  decks && Object.keys(decks).map( (deck, idx) => (
           <DeckCard
+            key={ idx }
             title={ decks[deck].title }
             questionsCount={ decks[deck].questions.length }
           />
