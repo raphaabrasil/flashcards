@@ -2,6 +2,7 @@ import React from 'react'
 import { Text, View, TouchableOpacity, KeyboardAvoidingView, TextInput, Dimensions } from 'react-native'
 import styled from 'styled-components'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
+import { createDeck } from '../api'
 
 const CreateView = styled.KeyboardAvoidingView`
   flex: 1;
@@ -43,6 +44,10 @@ export default class CreateDeck extends React.Component {
     })
   }
 
+  handleCreateDeck = () => (
+    createDeck( this.state.input )
+  )
+
   render() {
     const { input } = this.state
 
@@ -60,7 +65,7 @@ export default class CreateDeck extends React.Component {
           placeholderTextColor='#ccc'
         />
         <CreateButton
-          onPress={ () => console.log('oi') }
+          onPress={ this.handleCreateDeck }
         >
           <ButtonText>Create Deck</ButtonText>
         </CreateButton>
