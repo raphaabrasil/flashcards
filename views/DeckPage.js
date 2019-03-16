@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, ScrollView, Dimensions, FlatList, TouchableOpacity } from 'react-native';
 import Card from '../components/Card'
+import Result from '../components/Result'
 
 const deck = { questions: [
   {
@@ -24,7 +25,7 @@ export default class DeckPage extends React.Component {
     this.setState( state => ({
       ...state,
       scrollHeight: state.scrollHeight + scrollSize,
-    }), () =>{
+    }), () => {
       this.scroll.scrollTo({x: 0, y: this.state.scrollHeight, animated: true});
     })
   }
@@ -49,10 +50,7 @@ export default class DeckPage extends React.Component {
           renderItem={ ( { item } ) => <Card item={item} goToNext={ this.scrollTo }/> }
           keyExtractor={(item, index) => index.toString()}
         />
-        <View style={{ flex: 1, height: Dimensions.get('window').height, justifyContent: 'center', alignItems: 'center', backgroundColor: '#74B3CE' }}>
-          <Text style={{ fontSize: 28, color: '#fff' }}>Parabéns, Nota 10!</Text>
-          <TouchableOpacity onPress={ this.restartQuiz } ><Text>Restart Quiz!</Text></TouchableOpacity>
-        </View>
+        <Result />
       </ScrollView>
     );
   }
