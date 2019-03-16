@@ -34,6 +34,9 @@ const ButtonText = styled.Text`
 `
 
 export default class CreateDeck extends React.Component {
+  static navigationOptions = {
+    title: 'Create Deck'
+  }
   state = {
     input: '',
   }
@@ -44,9 +47,11 @@ export default class CreateDeck extends React.Component {
     })
   }
 
-  handleCreateDeck = () => (
+  handleCreateDeck = () => {
+    const { navigate } = this.props.navigation
     createDeck( this.state.input )
-  )
+    navigate('Home')
+  }
 
   render() {
     const { input } = this.state

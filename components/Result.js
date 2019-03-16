@@ -17,10 +17,11 @@ const ResultText = styled.Text`
 
 export default class Result extends React.Component {
   render() {
+    const { restartQuiz } = this.props
     return (
       <ResultView>
-        <AnsweText>Parabéns, Nota 10!</AnsweText>
-        <TouchableOpacity onPress={ this.restartQuiz } ><Text>Restart Quiz!</Text></TouchableOpacity>
+        <ResultText>Parabéns, Nota 10!</ResultText>
+        <TouchableOpacity onPress={ restartQuiz } ><Text>Restart Quiz!</Text></TouchableOpacity>
       </ResultView>
     )
   }

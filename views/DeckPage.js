@@ -17,6 +17,12 @@ const deck = { questions: [
 ]}
 
 export default class DeckPage extends React.Component {
+  static navigationOptions = ({ navigation }) => {
+    return {
+      title: navigation.getParam('title', 'Quiz'),
+    };
+  };
+
   state = {
     scrollHeight: 0,
   }
@@ -50,7 +56,7 @@ export default class DeckPage extends React.Component {
           renderItem={ ( { item } ) => <Card item={item} goToNext={ this.scrollTo }/> }
           keyExtractor={(item, index) => index.toString()}
         />
-        <Result />
+        <Result restartQuiz={ this.restartQuiz } />
       </ScrollView>
     );
   }

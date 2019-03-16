@@ -1,23 +1,14 @@
-import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
 import DeckPage from './views/DeckPage'
 import CreateDeck from './views/CreateDeck'
 import DecksList from './views/DecksList'
+import {createStackNavigator, createAppContainer} from 'react-navigation'
 
-export default class App extends React.Component {
-  render() {
-    return (
-      <View style={ styles.container }>
-        <DecksList />
-      </View>
-    );
-  }
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'flex-start',
-    backgroundColor: '#fff',
-  },
+const MainNavigator = createStackNavigator({
+  Home: {screen: DecksList},
+  Deck: {screen: DeckPage},
+	CreateDeck: {screen: CreateDeck},
 });
+
+const App = createAppContainer(MainNavigator)
+export default App
+
