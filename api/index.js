@@ -11,6 +11,7 @@ export function createDeck ( name ) {
   }))
 }
 
-export const getDecks = async () => (
-  await AsyncStorage.getItem(storageKey)
-)
+export const getDecks = async () => {
+  const decks = await AsyncStorage.getItem(storageKey)
+  return JSON.parse(decks)
+}
