@@ -58,13 +58,13 @@ export default class DecksList extends React.Component {
           <ScrollView>
           <FlatList
             data={ deckIds }
-            renderItem={ ( { item } ) => {
-              return <DeckCard
+            renderItem={ ( { item } ) => (
+              <DeckCard
                 title={ decks[item].title }
                 questions={ decks[item].questions }
                 goToDeckPage= { this.goToDeckPage }
               />
-            }}
+            )}
             keyExtractor={(deckId, index) => index.toString()}
           />
           <TouchableOpacity onPress={ this.createDeck }>
