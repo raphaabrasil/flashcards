@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, TouchableOpacity } from 'react-native'
 import styled from 'styled-components'
 
 const DeckItem = styled.View`
@@ -16,13 +16,17 @@ const DeckText = styled.Text`
 
 export default class DeckCard extends React.Component {
   render() {
-    const { title, questionsCount } = this.props
+    const { title, questions, goToDeckPage } = this.props
 
     return(
-      <DeckItem>
-        <DeckText>{ title }</DeckText>
-        <Text style={{textAlign: 'center'}}>{ questionsCount } questions.</Text>
-      </DeckItem>
+      <TouchableOpacity
+        onPress= { () => goToDeckPage( title, questions ) }
+      >
+        <DeckItem>
+          <DeckText>{ title }</DeckText>
+          <Text style={{textAlign: 'center'}}>{ questions.length } questions.</Text>
+        </DeckItem>
+      </TouchableOpacity>
     )
   }
 }

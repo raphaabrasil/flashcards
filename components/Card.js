@@ -29,13 +29,12 @@ export default class Card extends React.Component {
     card.flip()
     goToNext( height )
   }
-  fliped = idx => console.log(idx)
+
   render() {
     const { item, goToNext } = this.props
-    console.log(this.props)
 
     return (
-      <CardFlip ref={ ( card ) => this['card' + item.id] = card } style={{ height: height }} onFlipEnd={ this.fliped }>
+      <CardFlip ref={ ( card ) => this['card' + item.id] = card } style={{ height: height }}>
         <CardView style={{ backgroundColor: '#F39237' }}>
           <CardQuestion>{ item.question }</CardQuestion>
           <TouchableOpacity onPress={ () => this[`card${item.id}`].flip() } >

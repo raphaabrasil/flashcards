@@ -1,5 +1,5 @@
 import React from 'react'
-import { TouchableOpacity, Text, View } from 'react-native'
+import { FlatList, TouchableOpacity, Text, View, ScrollView } from 'react-native'
 import styled from 'styled-components'
 import { getDecks } from '../api'
 import DeckCard from '../components/DeckCard'
@@ -25,7 +25,7 @@ export default class DecksList extends React.Component {
   }
 
   getAllDecks = async() => {
-   const decks = await getDecks()
+    const decks = await getDecks()
     this.setState( state => ({
       ...state,
       loading: false,
@@ -33,11 +33,11 @@ export default class DecksList extends React.Component {
     }))
   }
 
-  goToDeckPage = deck => {
+  goToDeckPage = (title, questions) => {
     const { navigate } = this.props.navigation
     navigate('Deck', {
-      title: deck.title,
-      questions: deck.questions,
+      title,
+      questions,
     })
   }
 
@@ -45,26 +45,33 @@ export default class DecksList extends React.Component {
     const { navigate } = this.props.navigation
     navigate('CreateDeck', {})
   }
+
   render () {
     const { loading, decks } = this.state
+    const deckIds = Object.keys(decks)
+
     return (
       <HomeView>
         <NavigationEvents onDidFocus={ this.getAllDecks } />
         { loading && <Text>Loading</Text>  }
-        {  decks && Object.keys(decks).map( (deck, idx) => (
-          <TouchableOpacity
-            onPress= { () => this.goToDeckPage( decks[deck] ) }
-            key={ idx }
-          >
-            <DeckCard
-              title={ decks[deck].title }
-              questionsCount={ decks[deck].questions.length }
-            />
+        { decks &&
+          <ScrollView>
+          <FlatList
+            data={ deckIds }
+            renderItem={ ( { item } ) => {
+              return <DeckCard
+                title={ decks[item].title }
+                questions={ decks[item].questions }
+                goToDeckPage= { this.goToDeckPage }
+              />
+            }}
+            keyExtractor={(deckId, index) => index.toString()}
+          />
+          <TouchableOpacity onPress={ this.createDeck }>
+            <Text>Create Deck</Text>
           </TouchableOpacity>
-        ))}
-        <TouchableOpacity onPress={ this.createDeck }>
-          <Text>Create Deck</Text>
-        </TouchableOpacity>
+          </ScrollView>
+        }
       </HomeView>
     )
   }
