@@ -2,6 +2,8 @@ import React from 'react'
 import { Text, View, TouchableOpacity } from 'react-native'
 import styled from 'styled-components'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
+import { getQuestionsByDeck } from '../api'
+import { NavigationEvents } from 'react-navigation'
 
 const CreateView = styled.View`
   flex: 1;
@@ -45,7 +47,24 @@ export default class CreateDeck extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
       title: navigation.getParam('title', 'Quiz'),
-    };
+    }
+  }
+
+  state = {
+    questions: [],
+  }
+
+  componentDidMount() {
+    this.getDeckQuestions()
+  }
+
+  getDeckQuestions = async() => {
+    const deckTitle = this.props.navigation.getParam('title', '')
+    const questions = await getQuestionsByDeck( deckTitle )
+    this.setState( state => ({
+      ...state,
+      questions,
+    }))
   }
 
   addQuestion = deckTitle => {
@@ -61,10 +80,12 @@ export default class CreateDeck extends React.Component {
   render() {
     const { navigation } = this.props
     const title = navigation.getParam('title', '')
-    const questions = navigation.getParam('questions', [])
+    const { questions } = this.state
 
+    console.log(JSON.stringify(questions))
     return (
       <CreateView behavior='padding'>
+        <NavigationEvents onDidFocus={ this.getDeckQuestions } />
         <MaterialCommunityIcons
           name='cards'
           size={150}
@@ -79,7 +100,7 @@ export default class CreateDeck extends React.Component {
           <ButtonText>Start Quiz</ButtonText>
         </CreateButton>
         <CreateButtonGhost
-          onPress={ () => this.AddQuestion(title) }
+          onPress={ () => this.addQuestion(title) }
         >
           <ButtonText>Add Question</ButtonText>
         </CreateButtonGhost>

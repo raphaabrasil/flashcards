@@ -37,7 +37,6 @@ export default class DecksList extends React.Component {
     const { navigate } = this.props.navigation
     navigate('Deck', {
       title,
-      questions,
     })
   }
 
