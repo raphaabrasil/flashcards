@@ -53,9 +53,9 @@ export default class CreateDeck extends React.Component {
     navigate('AddQuestion', { deck: deckTitle })
   }
 
-  goToQuiz = questions => {
+  goToQuiz = (title, questions) => {
     const { navigate } = this.props.navigation
-    navigate('QuizPage', { questions })
+    navigate('QuizPage', { title, questions })
   }
 
   render() {
@@ -74,7 +74,7 @@ export default class CreateDeck extends React.Component {
           { title }
         </TitleText>
         <CreateButton
-          onPress={ () => this.goToQuiz(questions) }
+          onPress={ () => this.goToQuiz(title, questions) }
         >
           <ButtonText>Start Quiz</ButtonText>
         </CreateButton>
