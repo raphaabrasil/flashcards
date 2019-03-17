@@ -3,7 +3,7 @@ import { FlatList, TouchableOpacity, Text, View, ScrollView } from 'react-native
 import styled from 'styled-components'
 import { getDecks } from '../api'
 import DeckCard from '../components/DeckCard'
-import {NavigationEvents} from 'react-navigation';
+import { NavigationEvents } from 'react-navigation'
 
 const HomeView = styled.View`
   flex: 1;
