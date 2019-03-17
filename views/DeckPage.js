@@ -36,6 +36,12 @@ const TitleText = styled.Text`
   margin: 15px 0;
 `
 
+const CountText = styled.Text`
+  color: white;
+  margin: 10px 0;
+  text-align: center;
+`
+
 const ButtonText = styled.Text`
   color: white;
   text-transform: uppercase;
@@ -82,7 +88,6 @@ export default class CreateDeck extends React.Component {
     const title = navigation.getParam('title', '')
     const { questions } = this.state
 
-    console.log(JSON.stringify(questions))
     return (
       <CreateView behavior='padding'>
         <NavigationEvents onDidFocus={ this.getDeckQuestions } />
@@ -94,11 +99,17 @@ export default class CreateDeck extends React.Component {
         <TitleText>
           { title }
         </TitleText>
-        <CreateButton
-          onPress={ () => this.goToQuiz(title, questions) }
-        >
-          <ButtonText>Start Quiz</ButtonText>
-        </CreateButton>
+        <CountText>
+          { questions.length } questions
+        </CountText>
+        {
+          questions.length > 0 &&
+            <CreateButton
+              onPress={ () => this.goToQuiz(title, questions) }
+            >
+              <ButtonText>Start Quiz</ButtonText>
+            </CreateButton>
+        }
         <CreateButtonGhost
           onPress={ () => this.addQuestion(title) }
         >
