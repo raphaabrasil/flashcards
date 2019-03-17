@@ -12,11 +12,24 @@ export default class DeckPage extends React.Component {
 
   state = {
     scrollHeight: 0,
+    questionsCount: 0,
+    correctCount: 0,
   }
 
-  scrollTo = scrollSize => {
+  componentDidMount() {
+    const { navigation } = this.props
+    const questions = navigation.getParam('questions', [])
+    const questionsCount = questions.length
     this.setState( state => ({
       ...state,
+      questionsCount,
+    }))
+  }
+
+  goToNext = (scrollSize, correctAnswer) => {
+    this.setState( state => ({
+      ...state,
+      correctCount: correctAnswer ? state.correctCount + 1 : state.correctCount,
       scrollHeight: state.scrollHeight + scrollSize,
     }), () => {
       this.scroll.scrollTo({x: 0, y: this.state.scrollHeight, animated: true});
@@ -25,14 +38,22 @@ export default class DeckPage extends React.Component {
 
   restartQuiz = () => {
     this.setState( state => ({
+      ...state,
       scrollHeight: 0,
+      correctCount: 0,
     }), () => {
-      this.scrollTo(0)
+      this.goToNext(0, false)
     })
+  }
+
+  getPontuation = () => {
+    const { correctCount, questionsCount } = this.state
+    return Math.round(correctCount / questionsCount * 1000) / 100
   }
 
   render() {
     const questions = this.props.navigation.getParam('questions', [])
+    const pontuation = this.getPontuation()
 
     return (
       <ScrollView
@@ -42,10 +63,10 @@ export default class DeckPage extends React.Component {
       >
         <FlatList
           data={ questions }
-          renderItem={ ( { item } ) => <Card item={item} goToNext={ this.scrollTo }/> }
+          renderItem={ ( { item } ) => <Card item={item} goToNext={ this.goToNext }/> }
           keyExtractor={(item, index) => index.toString()}
         />
-        <Result restartQuiz={ this.restartQuiz } />
+        <Result pontuation={ pontuation } restartQuiz={ this.restartQuiz } />
       </ScrollView>
     );
   }

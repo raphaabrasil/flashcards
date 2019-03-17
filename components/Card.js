@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Text, View, TouchableOpacity, Dimensions } from 'react-native';
 import styled from 'styled-components/native'
 import CardFlip from 'react-native-card-flip';
-
+import { Header } from 'react-navigation';
 
 const CardView = styled.View`
   padding: 20px;
@@ -22,12 +22,13 @@ const CardLink = styled.Text`
   margin-top: 10px;
 `
 
-const { height } = Dimensions.get('window')
+const height = Dimensions.get('window').height - Header.HEIGHT
+
 
 export default class Card extends React.Component {
-  handleVote = ( card, goToNext ) => {
+  handleVote = ( card, goToNext, correctAnswer ) => {
     card.flip()
-    goToNext( height )
+    goToNext( height, correctAnswer)
   }
 
   render() {
@@ -43,9 +44,9 @@ export default class Card extends React.Component {
         </CardView>
         <CardView style={{ backgroundColor: '#0E79B2' }}>
           <CardQuestion>{ item.answer }</CardQuestion>
-          <Button title='Just like I tought!' color='green' onPress={ () => this.handleVote( this[`card${item.id}`], goToNext )} />
+          <Button title='Just like I tought!' color='green' onPress={ () => this.handleVote( this[`card${item.id}`], goToNext, true )} />
           <View style={{ marginBottom: 10 }} />
-          <Button title='It was not what i was thinking.' color='red' onPress={ () => this.handleVote( this[`card${item.id}`], goToNext ) }/>
+          <Button title='It was not what i was thinking.' color='red' onPress={ () => this.handleVote( this[`card${item.id}`], goToNext, false ) }/>
         </CardView>
       </CardFlip>
     );
