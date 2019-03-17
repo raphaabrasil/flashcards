@@ -1,8 +1,8 @@
 import React from 'react';
 import { Button, Text, View, TouchableOpacity, Dimensions } from 'react-native';
 import styled from 'styled-components/native'
-import CardFlip from 'react-native-card-flip';
-import { Header } from 'react-navigation';
+import CardFlip from 'react-native-card-flip'
+import { Header } from 'react-navigation'
 
 const CardView = styled.View`
   padding: 20px;
@@ -12,7 +12,7 @@ const CardView = styled.View`
 const CardQuestion = styled.Text`
   color: #fbfef9;
   font-size: 38px;
-  margin-bottom: 15px;
+  margin: 15px 0;
   text-align: center;
 `
 
@@ -32,11 +32,12 @@ export default class Card extends React.Component {
   }
 
   render() {
-    const { item, goToNext } = this.props
+    const { item, index, questionsCount, goToNext } = this.props
 
     return (
       <CardFlip ref={ ( card ) => this['card' + item.id] = card } style={{ height: height }}>
         <CardView style={{ backgroundColor: '#F39237' }}>
+          <Text style={{ color: '#fff', textAlign: 'center' }}>{`Question ${index + 1} of ${questionsCount} `}</Text>
           <CardQuestion>{ item.question }</CardQuestion>
           <TouchableOpacity onPress={ () => this[`card${item.id}`].flip() } >
             <CardLink>Check the answer!</CardLink>

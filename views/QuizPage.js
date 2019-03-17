@@ -63,7 +63,14 @@ export default class DeckPage extends React.Component {
       >
         <FlatList
           data={ questions }
-          renderItem={ ( { item } ) => <Card item={item} goToNext={ this.goToNext }/> }
+          renderItem={ ( { item, index } ) => (
+            <Card
+              item={item}
+              index={ index }
+              questionsCount={ questions.length }
+              goToNext={ this.goToNext }
+            />
+          )}
           keyExtractor={(item, index) => index.toString()}
         />
         <Result pontuation={ pontuation } restartQuiz={ this.restartQuiz } />
