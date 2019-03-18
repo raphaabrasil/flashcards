@@ -4,6 +4,10 @@ import styled from 'styled-components'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { getQuestionsByDeck } from '../api'
 import { NavigationEvents } from 'react-navigation'
+import {
+  clearLocalNotification,
+  setLocalNotification
+} from '../notification_service'
 
 const CreateView = styled.View`
   flex: 1;
@@ -80,6 +84,9 @@ export default class CreateDeck extends React.Component {
 
   goToQuiz = (title, questions) => {
     const { navigate } = this.props.navigation
+    clearLocalNotification()
+      .then(setLocalNotification)
+
     navigate('QuizPage', { title, questions })
   }
 

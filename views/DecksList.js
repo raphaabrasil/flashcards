@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { getDecks } from '../api'
 import DeckCard from '../components/DeckCard'
 import { NavigationEvents } from 'react-navigation'
+import { setLocalNotification } from '../notification_service'
 
 const HomeView = styled.View`
   flex: 1;
@@ -21,6 +22,7 @@ export default class DecksList extends React.Component {
   }
 
   componentDidMount() {
+    setLocalNotification()
     this.getAllDecks()
   }
 
