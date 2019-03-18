@@ -3,9 +3,9 @@ import { View, Text, TouchableOpacity } from 'react-native'
 import styled from 'styled-components'
 
 const DeckItem = styled.View`
-  background-color: #ddd;
+  background-color: #eee;
   padding: 25px 40px;
-  margin-bottom: 20px;
+  margin: 10px 0;
   border-radius: 10;
 `
 
