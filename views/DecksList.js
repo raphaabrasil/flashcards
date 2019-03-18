@@ -1,7 +1,7 @@
 import React from 'react'
 import { FlatList, TouchableOpacity, Text, View, ScrollView } from 'react-native'
 import styled from 'styled-components'
-import { getDecks } from '../api'
+import { getDecks, clearAll } from '../api'
 import DeckCard from '../components/DeckCard'
 import { NavigationEvents } from 'react-navigation'
 import { setLocalNotification } from '../notification_service'
@@ -10,6 +10,7 @@ import { Entypo } from '@expo/vector-icons'
 const HomeView = styled.View`
   flex: 1;
   padding: 10px 20px;
+  background-color: #8338EC;
 `
 
 const CreateButton = styled.TouchableOpacity`
@@ -17,9 +18,21 @@ const CreateButton = styled.TouchableOpacity`
   width: 65px;
   height: 65px;
   position: absolute;
-  bottom: 0;
-  right: 0;
+  bottom: 15px;
+  right: 15px;
   border-radius: 100;
+  align-items: center;
+  justify-content: center;
+`
+
+const EmptyText = styled.Text`
+  font-size: 30px;
+  color: #fff;
+  text-align: center;
+`
+
+const EmptyView = styled.View`
+  flex: 1;
   align-items: center;
   justify-content: center;
 `
@@ -62,32 +75,33 @@ export default class DecksList extends React.Component {
 
   render () {
     const { loading, decks } = this.state
-    const deckIds = Object.keys(decks)
+    const deckIds = decks && Object.keys(decks)
 
     return (
       <HomeView>
         <NavigationEvents onDidFocus={ this.getAllDecks } />
         { loading && <Text>Loading</Text>  }
-        { decks &&
-          <View style={{ flex: 1 }}>
-            <ScrollView>
-              <FlatList
-                data={ deckIds }
-                renderItem={ ( { item } ) => (
-                  <DeckCard
-                    title={ decks[item].title }
-                    questions={ decks[item].questions }
-                    goToDeckPage= { this.goToDeckPage }
-                  />
-                )}
-                keyExtractor={(deckId, index) => index.toString()}
-              />
-            </ScrollView>
-            <CreateButton onPress={ this.createDeck }>
-              <Entypo name='plus' size={30} color='white' />
-            </CreateButton>
-          </View>
+        { !decks &&
+            <EmptyView>
+              <EmptyText>You haven't created any deck yet.</EmptyText>
+            </EmptyView>
         }
+        <ScrollView>
+          <FlatList
+            data={ deckIds }
+            renderItem={ ( { item } ) => (
+              <DeckCard
+                title={ decks[item].title }
+                questions={ decks[item].questions }
+                goToDeckPage= { this.goToDeckPage }
+              />
+            )}
+            keyExtractor={(deckId, index) => index.toString()}
+          />
+        </ScrollView>
+        <CreateButton onPress={ this.createDeck }>
+          <Entypo name='plus' size={30} color='white' />
+        </CreateButton>
       </HomeView>
     )
   }
