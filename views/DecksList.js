@@ -5,10 +5,23 @@ import { getDecks } from '../api'
 import DeckCard from '../components/DeckCard'
 import { NavigationEvents } from 'react-navigation'
 import { setLocalNotification } from '../notification_service'
+import { Entypo } from '@expo/vector-icons'
 
 const HomeView = styled.View`
   flex: 1;
   padding: 10px 20px;
+`
+
+const CreateButton = styled.TouchableOpacity`
+  backgroundColor: #ec38a1;
+  width: 65px;
+  height: 65px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  border-radius: 100;
+  align-items: center;
+  justify-content: center;
 `
 
 export default class DecksList extends React.Component {
@@ -56,22 +69,24 @@ export default class DecksList extends React.Component {
         <NavigationEvents onDidFocus={ this.getAllDecks } />
         { loading && <Text>Loading</Text>  }
         { decks &&
-          <ScrollView>
-          <FlatList
-            data={ deckIds }
-            renderItem={ ( { item } ) => (
-              <DeckCard
-                title={ decks[item].title }
-                questions={ decks[item].questions }
-                goToDeckPage= { this.goToDeckPage }
+          <View style={{ flex: 1 }}>
+            <ScrollView>
+              <FlatList
+                data={ deckIds }
+                renderItem={ ( { item } ) => (
+                  <DeckCard
+                    title={ decks[item].title }
+                    questions={ decks[item].questions }
+                    goToDeckPage= { this.goToDeckPage }
+                  />
+                )}
+                keyExtractor={(deckId, index) => index.toString()}
               />
-            )}
-            keyExtractor={(deckId, index) => index.toString()}
-          />
-          <TouchableOpacity onPress={ this.createDeck }>
-            <Text>Create Deck</Text>
-          </TouchableOpacity>
-          </ScrollView>
+            </ScrollView>
+            <CreateButton onPress={ this.createDeck }>
+              <Entypo name='plus' size={30} color='white' />
+            </CreateButton>
+          </View>
         }
       </HomeView>
     )
