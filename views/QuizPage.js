@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import { View, Text, ScrollView, Dimensions, FlatList, TouchableOpacity } from 'react-native';
 import Card from '../components/Card'
 import Result from '../components/Result'
 
-export default class DeckPage extends React.Component {
+export default class DeckPage extends PureComponent {
   static navigationOptions = ({ navigation }) => {
     return {
       title: navigation.getParam('title', 'Quiz'),
