@@ -3,18 +3,16 @@ import { Notifications, Permissions } from 'expo'
 
 const NOTIFICATION_KEY = 'FlashCards:notifications'
 
-function createNotification() {
-  return {
-    title: 'Still not ready for that exam? 😱',
-    body: 'What about testing your abilities with a Quiz? 🤓',
-    ios: {
-      sound: true,
-    },
-    android: {
-      sound: true,
-      sticky: false,
-      vibrate: true,
-    }
+const notificationBody = {
+  title: 'Still not ready for that exam? 😱',
+  body: 'What about testing your abilities with a Quiz? 🤓',
+  ios: {
+    sound: true,
+  },
+  android: {
+    sound: true,
+    sticky: false,
+    vibrate: true,
   }
 }
 
@@ -40,7 +38,7 @@ export function setLocalNotification() {
 
 
               Notifications.scheduleLocalNotificationAsync(
-                createNotification(),
+                notificationBody,
                 {
                   time: tomorrow,
                   repeat: 'day',
